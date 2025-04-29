@@ -24,13 +24,19 @@
             <h2>Our VPN Packages</h2>
             <div class="bundles-grid" id="bundlesContainer"></div>
         </section>
+
+        <!-- Social Icons -->
+        <div class="social-icons">
+            <a href="#" id="telegramLink"><i class="fab fa-telegram"></i></a>
+            <a href="#" id="whatsappLink"><i class="fab fa-whatsapp"></i></a>
+            <a href="#" id="instagramLink"><i class="fab fa-instagram"></i></a>
+            <a href="#" id="twitterLink"><i class="fab fa-twitter"></i></a>
+            <a href="#" id="phoneLink"><i class="fas fa-phone"></i></a>
+        </div>
     </main>
 
     <footer>
-        <div class="footer-content">
-            <div class="contact-icons" id="contactIcons"></div>
-            <p>&copy; 2024 TC VPN Technologies</p>
-        </div>
+        <p>&copy; 2024 TC VPN Technologies</p>
     </footer>
 
     <script src="script.js"></script>
@@ -47,30 +53,23 @@
             container.innerHTML = bundles.map(bundle => `
                 <div class="bundle-card">
                     <div class="bundle-circle">
-                        <h3>${bundle.name}</h3>
+                        ${bundle.name}
                     </div>
                     <div class="bundle-details">
-                        <p><strong>Price:</strong> ${bundle.price}/month</p>
-                        <p><strong>Speed:</strong> ${bundle.speed}</p>
-                        <p><strong>Devices:</strong> ${bundle.devices}</p>
-                        <button class="select-button">Select Plan</button>
+                        <p><strong>${bundle.price}/month</strong></p>
+                        <p>${bundle.speed}</p>
+                        <p>${bundle.devices} devices</p>
                     </div>
                 </div>
             `).join('');
 
             // Load contact links
             const contacts = JSON.parse(localStorage.getItem('contacts')) || {};
-            const contactIcons = document.getElementById('contactIcons');
-            
-            if (contacts.telegram) {
-                contactIcons.innerHTML += `<a href="${contacts.telegram}" target="_blank"><i class="fab fa-telegram"></i></a>`;
-            }
-            if (contacts.email) {
-                contactIcons.innerHTML += `<a href="mailto:${contacts.email}"><i class="fas fa-envelope"></i></a>`;
-            }
-            if (contacts.phone) {
-                contactIcons.innerHTML += `<a href="tel:${contacts.phone}"><i class="fas fa-phone"></i></a>`;
-            }
+            if (contacts.telegram) document.getElementById('telegramLink').href = contacts.telegram;
+            if (contacts.whatsapp) document.getElementById('whatsappLink').href = contacts.whatsapp;
+            if (contacts.instagram) document.getElementById('instagramLink').href = contacts.instagram;
+            if (contacts.twitter) document.getElementById('twitterLink').href = contacts.twitter;
+            if (contacts.phone) document.getElementById('phoneLink').href = contacts.phone;
         });
     </script>
 </body>
