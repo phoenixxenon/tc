@@ -1,0 +1,1252 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TC Tech VPN - Secure & Private Internet Access</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Base Styles & Variables */
+        :root {
+            --primary: #2563eb;
+            --secondary: #10b981;
+            --dark: #1e293b;
+            --light: #f8fafc;
+            --accent: #f59e0b;
+            --error: #ef4444;
+            --success: #10b981;
+            --transition: all 0.3s ease;
+            --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+            --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            line-height: 1.6;
+            color: var(--dark);
+            background-color: var(--light);
+            overflow-x: hidden;
+        }
+
+        /* Smooth scroll */
+        html {
+            scroll-behavior: smooth;
+        }
+
+        /* Typography */
+        h1, h2, h3, h4, h5, h6 {
+            font-weight: 700;
+            line-height: 1.2;
+            margin-bottom: 1rem;
+        }
+
+        h1 { font-size: 3rem; }
+        h2 { font-size: 2.25rem; }
+        h3 { font-size: 1.75rem; }
+        h4 { font-size: 1.5rem; }
+
+        p {
+            margin-bottom: 1rem;
+            color: #64748b;
+        }
+
+        a {
+            text-decoration: none;
+            color: var(--primary);
+            transition: var(--transition);
+        }
+
+        /* Utility Classes */
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1.5rem;
+        }
+
+        .text-center { text-align: center; }
+        .text-primary { color: var(--primary); }
+        .text-secondary { color: var(--secondary); }
+        .text-accent { color: var(--accent); }
+        .bg-primary { background-color: var(--primary); }
+        .bg-secondary { background-color: var(--secondary); }
+        .bg-light { background-color: var(--light); }
+        .bg-dark { background-color: var(--dark); color: white; }
+        .btn {
+            display: inline-block;
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.375rem;
+            font-weight: 600;
+            text-align: center;
+            cursor: pointer;
+            transition: var(--transition);
+            border: none;
+        }
+        .btn-primary {
+            background-color: var(--primary);
+            color: white;
+        }
+        .btn-primary:hover {
+            background-color: #1d4ed8;
+            transform: translateY(-2px);
+            box-shadow: var(--shadow);
+        }
+        .btn-secondary {
+            background-color: var(--secondary);
+            color: white;
+        }
+        .btn-secondary:hover {
+            background-color: #0d9488;
+            transform: translateY(-2px);
+            box-shadow: var(--shadow);
+        }
+        .btn-outline {
+            background-color: transparent;
+            border: 2px solid var(--primary);
+            color: var(--primary);
+        }
+        .btn-outline:hover {
+            background-color: var(--primary);
+            color: white;
+        }
+        .btn-lg {
+            padding: 1rem 2rem;
+            font-size: 1.125rem;
+        }
+        .section {
+            padding: 5rem 0;
+        }
+        .section-title {
+            margin-bottom: 3rem;
+            position: relative;
+            display: inline-block;
+        }
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            width: 50px;
+            height: 4px;
+            background-color: var(--primary);
+            border-radius: 2px;
+        }
+        .text-center .section-title::after {
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        @keyframes slideUp {
+            from { 
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to { 
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0px); }
+        }
+        .animate-fadeIn {
+            animation: fadeIn 1s ease forwards;
+        }
+        .animate-slideUp {
+            animation: slideUp 0.8s ease forwards;
+        }
+        .animate-delay-1 { animation-delay: 0.2s; }
+        .animate-delay-2 { animation-delay: 0.4s; }
+        .animate-delay-3 { animation-delay: 0.6s; }
+        .animate-delay-4 { animation-delay: 0.8s; }
+        .animate-pulse {
+            animation: pulse 2s infinite;
+        }
+        .animate-float {
+            animation: float 3s ease-in-out infinite;
+        }
+
+        /* Header & Navigation */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            background-color: rgba(255, 255, 255, 0.95);
+            box-shadow: var(--shadow-sm);
+            transition: var(--transition);
+        }
+        header.scrolled {
+            background-color: rgba(255, 255, 255, 0.98);
+            box-shadow: var(--shadow);
+        }
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 0;
+        }
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+        }
+        .logo i {
+            margin-right: 0.5rem;
+            font-size: 1.75rem;
+        }
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+        }
+        .nav-links a {
+            color: var(--dark);
+            font-weight: 500;
+            position: relative;
+        }
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: var(--primary);
+            transition: var(--transition);
+        }
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+        .nav-links a.active {
+            color: var(--primary);
+        }
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            color: var(--dark);
+            cursor: pointer;
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+            background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+        }
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('https://images.unsplash.com/photo-1639762681057-408e52192e55?q=80&w=2232&auto=format&fit=crop') no-repeat center center;
+            background-size: cover;
+            opacity: 0.1;
+            z-index: 0;
+        }
+        .hero-content {
+            position: relative;
+            z-index: 1;
+            max-width: 600px;
+        }
+        .hero-title {
+            font-size: 3.5rem;
+            margin-bottom: 1.5rem;
+            line-height: 1.1;
+        }
+        .hero-subtitle {
+            font-size: 1.25rem;
+            margin-bottom: 2rem;
+            color: #475569;
+        }
+        .hero-buttons {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+        .hero-stats {
+            display: flex;
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+        .stat-item {
+            text-align: center;
+        }
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+        }
+        .stat-label {
+            font-size: 0.875rem;
+            color: #64748b;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        .hero-image {
+            position: absolute;
+            right: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 50%;
+            max-width: 700px;
+            z-index: 0;
+        }
+        .hero-image img {
+            width: 100%;
+            height: auto;
+            object-fit: contain;
+        }
+
+        /* Features Section */
+        .features {
+            background-color: white;
+        }
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+        .feature-card {
+            background-color: white;
+            border-radius: 0.5rem;
+            padding: 2rem;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            border: 1px solid #e2e8f0;
+        }
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-lg);
+        }
+        .feature-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background-color: #dbeafe;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1.5rem;
+            color: var(--primary);
+            font-size: 1.5rem;
+        }
+        .feature-card:nth-child(2) .feature-icon {
+            background-color: #dcfce7;
+            color: var(--secondary);
+        }
+        .feature-card:nth-child(3) .feature-icon {
+            background-color: #fef3c7;
+            color: var(--accent);
+        }
+        .feature-card:nth-child(4) .feature-icon {
+            background-color: #fee2e2;
+            color: var(--error);
+        }
+        .feature-title {
+            font-size: 1.25rem;
+            margin-bottom: 1rem;
+        }
+
+        /* How It Works Section */
+        .how-it-works {
+            background-color: #f8fafc;
+        }
+        .steps {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+            position: relative;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        .step {
+            display: flex;
+            gap: 2rem;
+            position: relative;
+            z-index: 1;
+        }
+        .step-number {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background-color: var(--primary);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            flex-shrink: 0;
+            box-shadow: var(--shadow);
+        }
+        .step-content {
+            background-color: white;
+            padding: 1.5rem;
+            border-radius: 0.5rem;
+            box-shadow: var(--shadow);
+            flex-grow: 1;
+        }
+        .step-title {
+            margin-bottom: 0.5rem;
+        }
+        .steps::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 25px;
+            height: 100%;
+            width: 2px;
+            background-color: #cbd5e1;
+            z-index: 0;
+        }
+
+        /* VPN Apps Section */
+        .pricing {
+            background-color: white;
+        }
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+        .pricing-card {
+            background-color: white;
+            border-radius: 0.5rem;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            border: 1px solid #e2e8f0;
+            text-align: center;
+        }
+        .pricing-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-lg);
+        }
+        .pricing-header {
+            padding: 2rem;
+            text-align: center;
+            border-bottom: 1px solid #e2e8f0;
+        }
+        .pricing-name {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: var(--primary);
+        }
+        .app-image {
+            width: 100%;
+            height: 200px;
+            object-fit: contain;
+            margin-bottom: 1.5rem;
+        }
+        .pricing-footer {
+            padding: 0 2rem 2rem;
+            text-align: center;
+        }
+
+        /* Testimonials Section */
+        .testimonials {
+            background-color: #f8fafc;
+        }
+        .testimonials-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+        .testimonial-card {
+            background-color: white;
+            border-radius: 0.5rem;
+            padding: 2rem;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+        }
+        .testimonial-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-lg);
+        }
+        .testimonial-content {
+            margin-bottom: 1.5rem;
+            font-style: italic;
+            color: #475569;
+        }
+        .testimonial-author {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        .author-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            overflow: hidden;
+        }
+        .author-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .author-info h4 {
+            margin-bottom: 0.25rem;
+        }
+        .author-info p {
+            color: #64748b;
+            font-size: 0.875rem;
+            margin-bottom: 0;
+        }
+        .stars {
+            color: var(--accent);
+            margin-bottom: 1rem;
+        }
+
+        /* FAQ Section */
+        .faq {
+            background-color: white;
+        }
+        .faq-container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        .faq-item {
+            margin-bottom: 1rem;
+            border-radius: 0.5rem;
+            overflow: hidden;
+            box-shadow: var(--shadow-sm);
+            border: 1px solid #e2e8f0;
+        }
+        .faq-question {
+            padding: 1.5rem;
+            background-color: white;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            font-weight: 600;
+        }
+        .faq-question i {
+            transition: var(--transition);
+        }
+        .faq-item.active .faq-question i {
+            transform: rotate(180deg);
+        }
+        .faq-answer {
+            padding: 0 1.5rem;
+            max-height: 0;
+            overflow: hidden;
+            transition: var(--transition);
+            background-color: #f8fafc;
+        }
+        .faq-item.active .faq-answer {
+            padding: 1.5rem;
+            max-height: 500px;
+        }
+
+        /* CTA Section */
+        .cta {
+            background: linear-gradient(135deg, var(--primary) 0%, #3b82f6 100%);
+            color: white;
+            text-align: center;
+        }
+        .cta-title {
+            color: white;
+            margin-bottom: 1.5rem;
+        }
+        .cta-subtitle {
+            color: rgba(255, 255, 255, 0.9);
+            margin-bottom: 2rem;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .cta-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+        }
+        .cta .btn-outline {
+            border-color: white;
+            color: white;
+        }
+        .cta .btn-outline:hover {
+            background-color: white;
+            color: var(--primary);
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--dark);
+            color: white;
+            padding: 4rem 0 2rem;
+        }
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+        .footer-logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            display: inline-block;
+        }
+        .footer-about {
+            max-width: 300px;
+        }
+        .footer-title {
+            font-size: 1.125rem;
+            margin-bottom: 1.5rem;
+            color: white;
+        }
+        .footer-links li {
+            margin-bottom: 0.75rem;
+            list-style: none;
+        }
+        .footer-links a {
+            color: #94a3b8;
+            transition: var(--transition);
+        }
+        .footer-links a:hover {
+            color: white;
+        }
+        .footer-social {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+        .footer-social a {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: #334155;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: var(--transition);
+        }
+        .footer-social a:hover {
+            background-color: var(--primary);
+            transform: translateY(-3px);
+        }
+        .newsletter-form {
+            display: flex;
+            margin-top: 1rem;
+        }
+        .newsletter-input {
+            flex-grow: 1;
+            padding: 0.75rem;
+            border: none;
+            border-radius: 0.25rem 0 0 0.25rem;
+        }
+        .newsletter-btn {
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            padding: 0 1rem;
+            border-radius: 0 0.25rem 0.25rem 0;
+            cursor: pointer;
+        }
+        .footer-bottom {
+            border-top: 1px solid #334155;
+            padding-top: 2rem;
+            text-align: center;
+            color: #94a3b8;
+            font-size: 0.875rem;
+        }
+
+        /* Live Chat Button */
+        .live-chat {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background-color: var(--primary);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: var(--shadow-lg);
+            cursor: pointer;
+            z-index: 999;
+            transition: var(--transition);
+        }
+        .live-chat:hover {
+            transform: translateY(-5px);
+            background-color: #1d4ed8;
+        }
+        .live-chat i {
+            font-size: 1.5rem;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 1024px) {
+            .hero-image {
+                width: 45%;
+                opacity: 0.8;
+            }
+        }
+
+        @media (max-width: 768px) {
+            h1 { font-size: 2.5rem; }
+            h2 { font-size: 2rem; }
+            .section {
+                padding: 3rem 0;
+            }
+            .nav-links {
+                position: fixed;
+                top: 70px;
+                left: 0;
+                width: 100%;
+                background-color: white;
+                flex-direction: column;
+                align-items: center;
+                padding: 2rem 0;
+                gap: 1.5rem;
+                box-shadow: var(--shadow);
+                transform: translateY(-150%);
+                transition: var(--transition);
+                z-index: 999;
+            }
+            .nav-links.active {
+                transform: translateY(0);
+            }
+            .mobile-menu-btn {
+                display: block;
+            }
+            .hero {
+                text-align: center;
+                padding-top: 100px;
+            }
+            .hero-content {
+                max-width: 100%;
+            }
+            .hero-buttons {
+                justify-content: center;
+            }
+            .hero-stats {
+                justify-content: center;
+            }
+            .hero-image {
+                position: relative;
+                width: 100%;
+                margin-top: 3rem;
+                transform: none;
+                top: auto;
+                right: auto;
+            }
+            .steps::before {
+                display: none;
+            }
+            .step {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            .step-number {
+                margin-bottom: 1rem;
+            }
+            .cta-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+            .cta-buttons .btn {
+                width: 100%;
+                max-width: 300px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            h1 { font-size: 2rem; }
+            h2 { font-size: 1.75rem; }
+            .hero-title {
+                font-size: 2.5rem;
+            }
+            .hero-buttons {
+                flex-direction: column;
+            }
+            .hero-buttons .btn {
+                width: 100%;
+            }
+            .pricing-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header id="header">
+        <div class="container">
+            <nav class="navbar">
+                <a href="#" class="logo">
+                    <i class="fas fa-shield-alt"></i>
+                    <span>TC Tech VPN</span>
+                </a>
+                <div class="nav-links">
+                    <a href="#home" class="active">Home</a>
+                    <a href="#features">Features</a>
+                    <a href="#how-it-works">How It Works</a>
+                    <a href="#apps">Our Apps</a>
+                    <a href="#testimonials">Testimonials</a>
+                    <a href="#faq">FAQ</a>
+                    <a href="#home" class="active">BINGWA BUNDLES</a>
+                </div>
+                <button class="mobile-menu-btn">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="container">
+            <div class="hero-content animate-slideUp">
+                <h1 class="hero-title">Secure Your Digital Life with <span class="text-primary">TC Tech VPN</span></h1>
+                <p class="hero-subtitle">Browse anonymously, access restricted content, and protect your data with our military-grade encryption.</p>
+                <div class="hero-buttons">
+                    <a href="#apps" class="btn btn-primary btn-lg animate-pulse">Get Started</a>
+                    <a href="#features" class="btn btn-outline btn-lg">Learn More</a>
+                </div>
+                <div class="hero-stats">
+                    <div class="stat-item">
+                        <div class="stat-number">10M+</div>
+                        <div class="stat-label">Users</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">50+</div>
+                        <div class="stat-label">Countries</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">99.9%</div>
+                        <div class="stat-label">Uptime</div>
+                    </div>
+                </div>
+            </div>
+            <div class="hero-image animate-float">
+                <img src="https://images.unsplash.com/photo-1614064548237-096f735f344f?q=80&w=2070&auto=format&fit=crop" alt="VPN Illustration">
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="section features" id="features">
+        <div class="container">
+            <h2 class="section-title text-center">Why Choose TC Tech VPN</h2>
+            <div class="features-grid">
+                <div class="feature-card animate-slideUp animate-delay-1">
+                    <div class="feature-icon">
+                        <i class="fas fa-lock"></i>
+                    </div>
+                    <h3 class="feature-title">Military-Grade Encryption</h3>
+                    <p>Protect your data with AES-256 encryption, the same standard used by governments and security experts worldwide.</p>
+                </div>
+                <div class="feature-card animate-slideUp animate-delay-2">
+                    <div class="feature-icon">
+                        <i class="fas fa-globe"></i>
+                    </div>
+                    <h3 class="feature-title">Global Server Network</h3>
+                    <p>Access content from anywhere with our network of high-speed servers in 50+ countries around the world.</p>
+                </div>
+                <div class="feature-card animate-slideUp animate-delay-3">
+                    <div class="feature-icon">
+                        <i class="fas fa-user-secret"></i>
+                    </div>
+                    <h3 class="feature-title">No Logs Policy</h3>
+                    <p>We never track, store, or share your online activity. Your privacy is our top priority.</p>
+                </div>
+                <div class="feature-card animate-slideUp animate-delay-4">
+                    <div class="feature-icon">
+                        <i class="fas fa-tachometer-alt"></i>
+                    </div>
+                    <h3 class="feature-title">Lightning Fast Speeds</h3>
+                    <p>Experience minimal speed loss with our optimized servers and unlimited bandwidth.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works Section -->
+    <section class="section how-it-works" id="how-it-works">
+        <div class="container">
+            <h2 class="section-title text-center">How TC Tech VPN Works</h2>
+            <div class="steps">
+                <div class="step animate-slideUp">
+                    <div class="step-number">1</div>
+                    <div class="step-content">
+                        <h3 class="step-title">Download & Install</h3>
+                        <p>Get our app from the App Store, Google Play, or download directly from our website. Installation takes less than a minute.</p>
+                    </div>
+                </div>
+                <div class="step animate-slideUp animate-delay-1">
+                    <div class="step-number">2</div>
+                    <div class="step-content">
+                        <h3 class="step-title">Connect to a Server</h3>
+                        <p>Choose from our global network of servers or let our smart algorithm select the fastest one for you.</p>
+                    </div>
+                </div>
+                <div class="step animate-slideUp animate-delay-2">
+                    <div class="step-number">3</div>
+                    <div class="step-content">
+                        <h3 class="step-title">Browse Securely</h3>
+                        <p>That's it! Your connection is now encrypted and your online activity is protected from prying eyes.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- VPN Apps Section -->
+    <section class="section pricing" id="apps">
+        <div class="container">
+            <h2 class="section-title text-center">Our VPN Applications</h2>
+            <div class="pricing-grid">
+                <div class="pricing-card animate-slideUp">
+                    <div class="pricing-header">
+                        <h3 class="pricing-name">TC TECH VPN</h3>
+                    </div>
+                    <div class="pricing-features">
+                        <img src="banner2.jpg" alt="Windows VPN App" class="app-image">
+                        <p>Secure your internet with our lightweight and powerful VPN application.</p>
+                    </div>
+                    <div class="pricing-footer">
+                        <a href="#" class="btn btn-primary">Download</a>
+                    </div>
+                </div>
+                <div class="pricing-card animate-slideUp animate-delay-1">
+                    <div class="pricing-header">
+                        <h3 class="pricing-name">PANDA VPN</h3>
+                    </div>
+                    <div class="pricing-features">
+                        <img src="banner3.jpg" alt="Android VPN App" class="app-image">
+                        <p>Protect your internet on any network with our easy-to-use VPN app.</p>
+                    </div>
+                    <div class="pricing-footer">
+                        <a href="#" class="btn btn-primary">Download</a>
+                    </div>
+                </div>
+                <div class="pricing-card animate-slideUp animate-delay-2">
+                    <div class="pricing-header">
+                        <h3 class="pricing-name">TC PRIME VPN GO</h3>
+                    </div>
+                    <div class="pricing-features">
+                        <img src="banner4.jpg" alt="iOS VPN App" class="app-image">
+                        <p>Secure your internet with our optimized VPN application for android.</p>
+                    </div>
+                    <div class="pricing-footer">
+                        <a href="#" class="btn btn-primary">Download</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section class="section testimonials" id="testimonials">
+        <div class="container">
+            <h2 class="section-title text-center">What Our Users Say</h2>
+            <div class="testimonials-grid">
+                <div class="testimonial-card animate-slideUp">
+                    <div class="stars">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <p class="testimonial-content">"TC Tech VPN has completely changed how I browse the internet. I can now access all my favorite content while traveling abroad without any restrictions."</p>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">
+                            <img src="https://randomuser.me/api/portraits/women/44.jpg" alt="Sarah J.">
+                        </div>
+                        <div class="author-info">
+                            <h4>Sarah J.</h4>
+                            <p>Digital Nomad</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial-card animate-slideUp animate-delay-1">
+                    <div class="stars">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <p class="testimonial-content">"The speeds are incredible! I was worried a VPN would slow down my connection, but TC Tech VPN is just as fast as my regular internet."</p>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">
+                            <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Michael T.">
+                        </div>
+                        <div class="author-info">
+                            <h4>Michael T.</h4>
+                            <p>Software Engineer</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial-card animate-slideUp animate-delay-2">
+                    <div class="stars">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star-half-alt"></i>
+                    </div>
+                    <p class="testimonial-content">"As someone who values privacy, I appreciate TC Tech's no-logs policy. The interface is simple and it works perfectly on all my devices."</p>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">
+                            <img src="https://randomuser.me/api/portraits/women/68.jpg" alt="Emma R.">
+                        </div>
+                        <div class="author-info">
+                            <h4>Emma R.</h4>
+                            <p>Privacy Advocate</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section class="section faq" id="faq">
+        <div class="container">
+            <h2 class="section-title text-center">Frequently Asked Questions</h2>
+            <div class="faq-container">
+                <div class="faq-item animate-slideUp">
+                    <div class="faq-question">
+                        <span>What is a VPN and why do I need one?</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>A VPN (Virtual Private Network) encrypts your internet connection and routes it through a server in a location of your choice. This protects your privacy by hiding your IP address, secures your data on public Wi-Fi, and allows you to access geo-restricted content from anywhere in the world.</p>
+                    </div>
+                </div>
+                <div class="faq-item animate-slideUp animate-delay-1">
+                    <div class="faq-question">
+                        <span>Is TC Tech VPN legal to use?</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Yes, using a VPN is completely legal in most countries. However, we strongly discourage any illegal activities while using our service. Please check your local laws regarding VPN usage as some countries restrict or regulate VPN services.</p>
+                    </div>
+                </div>
+                <div class="faq-item animate-slideUp animate-delay-2">
+                    <div class="faq-question">
+                        <span>How many devices can I connect simultaneously?</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Our Basic plan allows 5 simultaneous connections, Pro plan allows 10, and Family plan allows up to 20 devices to be connected at the same time. You can use TC Tech VPN on all your devices including smartphones, tablets, computers, and even routers.</p>
+                    </div>
+                </div>
+                <div class="faq-item animate-slideUp animate-delay-3">
+                    <div class="faq-question">
+                        <span>Will using a VPN slow down my internet speed?</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>While all VPNs may cause some speed reduction due to encryption overhead, TC Tech VPN is optimized for minimal speed loss. Our global network of high-speed servers ensures you get the best possible performance. Most users report only a 5-10% speed reduction, which is often unnoticeable.</p>
+                    </div>
+                </div>
+                <div class="faq-item animate-slideUp animate-delay-4">
+                    <div class="faq-question">
+                        <span>Do you keep logs of my online activity?</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>No, we have a strict no-logs policy. We do not track, store, or log any information about what you do online when connected to our VPN service. The only information we collect is necessary for account creation and payment processing.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="section cta">
+        <div class="container">
+            <h2 class="cta-title animate-slideUp">Ready to Take Control of Your Online Privacy?</h2>
+            <p class="cta-subtitle animate-slideUp animate-delay-1">Join over 10 million users who trust TC Tech VPN to protect their digital lives. Try it risk-free with our 30-day money-back guarantee.</p>
+            <div class="cta-buttons">
+                <a href="#apps" class="btn btn-secondary btn-lg animate-slideUp animate-delay-2">Get TC Tech VPN Now</a>
+                <a href="#faq" class="btn btn-outline btn-lg animate-slideUp animate-delay-3">Have Questions?</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-about">
+                    <a href="#" class="footer-logo">TC Tech VPN</a>
+                    <p>Protecting your digital privacy since 2015. Our mission is to provide secure and unrestricted internet access to everyone.</p>
+                    <div class="footer-social">
+                        <a href="https://www.facebook.com/share/1G7yifCjXV/"><i class="fab fa-facebook-f"></i></a>
+                        <a href="https://x.com/tctechvpn"><i class="fab fa-twitter"></i></a>
+                        <a href="https://www.instagram.com/tctechvpn"><i class="fab fa-instagram"></i></a>
+                        <a href="https://t.me/TCTECHVPNOFFICIAL"><i class="fa-brands fa-telegram"></i></a>
+                    </div>
+                </div>
+                <div class="footer-links-container">
+                    <h3 class="footer-title">Product</h3>
+                    <ul class="footer-links">
+                        <li><a href="#">Features</a></li>
+                        <li><a href="#">Pricing</a></li>
+                        <li><a href="#">Apps</a></li>
+                        <li><a href="#">Server Status</a></li>
+                        <li><a href="#">API</a></li>
+                    </ul>
+                </div>
+                <div class="footer-links-container">
+                    <h3 class="footer-title">Company</h3>
+                    <ul class="footer-links">
+                        <li><a href="#">About Us</a></li>
+                        <li><a href="#">Careers</a></li>
+                        <li><a href="#">Press</a></li>
+                        <li><a href="#">Blog</a></li>
+                        <li><a href="#">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-links-container">
+                    <h3 class="footer-title">Support</h3>
+                    <ul class="footer-links">
+                        <li><a href="#">Help Center</a></li>
+                        <li><a href="#">Tutorials</a></li>
+                        <li><a href="#">Privacy Policy</a></li>
+                        <li><a href="#">Terms of Service</a></li>
+                        <li><a href="#">Refund Policy</a></li>
+                    </ul>
+                </div>
+                <div class="footer-newsletter">
+                    <h3 class="footer-title">Newsletter</h3>
+                    <p>Subscribe to get updates on new features and special offers.</p>
+                    <form class="newsletter-form">
+                        <input type="email" class="newsletter-input" placeholder="Your email">
+                        <button type="submit" class="newsletter-btn">
+                            <i class="fas fa-paper-plane"></i>
+                        </button>
+                    </form>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 TC Tech VPN. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Live Chat Button -->
+    <div class="live-chat">
+        <i class="fas fa-comment-dots"></i>
+    </div>
+
+    <script>
+        // Mobile Menu Toggle
+        const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+        const navLinks = document.querySelector('.nav-links');
+        
+        mobileMenuBtn.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+            mobileMenuBtn.innerHTML = navLinks.classList.contains('active') ? 
+                '<i class="fas fa-times"></i>' : '<i class="fas fa-bars"></i>';
+        });
+        
+        // Close mobile menu when clicking on a link
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.addEventListener('click', () => {
+                navLinks.classList.remove('active');
+                mobileMenuBtn.innerHTML = '<i class="fas fa-bars"></i>';
+            });
+        });
+        
+        // FAQ Accordion
+        document.querySelectorAll('.faq-question').forEach(question => {
+            question.addEventListener('click', () => {
+                const item = question.parentNode;
+                item.classList.toggle('active');
+            });
+        });
+        
+        // Header scroll effect
+        window.addEventListener('scroll', () => {
+            const header = document.getElementById('header');
+            if (window.scrollY > 50) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        });
+        
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if (targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 70,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+        
+        // Live Chat Button
+        const liveChat = document.querySelector('.live-chat');
+        liveChat.addEventListener('click', () => {
+            alert('Live chat support will open here in a real implementation.');
+        });
+        
+        // Animation on scroll
+        const animateOnScroll = () => {
+            const elements = document.querySelectorAll('.animate-slideUp, .animate-fadeIn');
+            
+            elements.forEach(element => {
+                const elementPosition = element.getBoundingClientRect().top;
+                const screenPosition = window.innerHeight / 1.2;
+                
+                if (elementPosition < screenPosition) {
+                    element.style.opacity = '1';
+                    element.style.transform = 'translateY(0)';
+                }
+            });
+        };
+        
+        window.addEventListener('scroll', animateOnScroll);
+        window.addEventListener('load', animateOnScroll);
+    </script>
+</body>
+</html>
