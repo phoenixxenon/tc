@@ -22,6 +22,7 @@
     <main>
         <!-- Banner Images Section -->
         <section class="banner-section">
+            <h2>Our VPN Apps</h2>
             <div class="banner-grid" id="bannerContainer"></div>
         </section>
 
@@ -38,13 +39,19 @@
                 <p>Click to view our exclusive bundles</p>
             </div>
         </section>
+
+        <!-- Social Icons -->
+        <div class="social-icons">
+            <a href="#" id="telegramLink"><i class="fab fa-telegram"></i></a>
+            <a href="#" id="whatsappLink"><i class="fab fa-whatsapp"></i></a>
+            <a href="#" id="instagramLink"><i class="fab fa-instagram"></i></a>
+            <a href="#" id="twitterLink"><i class="fab fa-twitter"></i></a>
+            <a href="#" id="phoneLink"><i class="fas fa-phone"></i></a>
+        </div>
     </main>
 
     <footer>
-        <div class="footer-content">
-            <div class="contact-icons" id="contactIcons"></div>
-            <p>&copy; 2024 TC VPN Technologies</p>
-        </div>
+        <p>&copy; 2024 TC VPN Technologies</p>
     </footer>
 
     <script src="script.js"></script>
@@ -58,53 +65,36 @@
             if (banners.length === 0) {
                 // Default placeholder images
                 container.innerHTML = `
-                    <div class="banner-item left">
-                        <img src="https://via.placeholder.com/800x400?text=Banner+1" alt="Banner 1">
+                    <div class="banner-item">
+                        <img src="banner2.jpg" alt="TCtech VPN">
+                        <p class="image-caption"><i>TCtech VPN</i></p>
                     </div>
-                    <div class="banner-item center">
-                        <img src="https://via.placeholder.com/800x400?text=Banner+2" alt="Banner 2">
+                    <div class="banner-item">
+                        <img src="banner4.jpg" alt="TC Prime VPN">
+                        <p class="image-caption"><i>TC Prime VPN</i></p>
                     </div>
-                    <div class="banner-item right">
-                        <img src="https://via.placeholder.com/800x400?text=Banner+3" alt="Banner 3">
+                    <div class="banner-item">
+                        <img src="banner3.jpg" alt="Panda VPN">
+                        <p class="image-caption"><i>Panda VPN</i></p>
                     </div>
                 `;
             } else {
+                const captions = ["TCtech VPN", "TC Prime VPN", "Panda VPN"];
                 container.innerHTML = banners.map((banner, index) => `
-                    <div class="banner-item ${index === 1 ? 'center' : index === 0 ? 'left' : 'right'}">
-                        <img src="${banner.image}" alt="Banner ${index + 1}">
-                        ${banner.title ? `<div class="banner-title">${banner.title}</div>` : ''}
+                    <div class="banner-item">
+                        <img src="${banner}" alt="VPN App ${index + 1}">
+                        <p class="image-caption"><i>${captions[index] || "VPN App"}</i></p>
                     </div>
                 `).join('');
             }
 
-            // Load features
-            const features = JSON.parse(localStorage.getItem('features')) || [
-                { icon: 'fa-shield-alt', title: 'Security', text: 'AES-256 encryption' },
-                { icon: 'fa-bolt', title: 'Speed', text: '1Gbps servers' },
-                { icon: 'fa-globe', title: 'Global', text: '100+ countries' }
-            ];
-            
-            document.getElementById('featuresContainer').innerHTML = features.map(feat => `
-                <div class="feature-card">
-                    <i class="fas ${feat.icon}"></i>
-                    <h3>${feat.title}</h3>
-                    <p>${feat.text}</p>
-                </div>
-            `).join('');
-
             // Load contact links
             const contacts = JSON.parse(localStorage.getItem('contacts')) || {};
-            const contactIcons = document.getElementById('contactIcons');
-            
-            if (contacts.telegram) {
-                contactIcons.innerHTML += `<a href="${contacts.telegram}" target="_blank"><i class="fab fa-telegram"></i></a>`;
-            }
-            if (contacts.email) {
-                contactIcons.innerHTML += `<a href="mailto:${contacts.email}"><i class="fas fa-envelope"></i></a>`;
-            }
-            if (contacts.phone) {
-                contactIcons.innerHTML += `<a href="tel:${contacts.phone}"><i class="fas fa-phone"></i></a>`;
-            }
+            if (contacts.telegram) document.getElementById('telegramLink').href = contacts.telegram;
+            if (contacts.whatsapp) document.getElementById('whatsappLink').href = contacts.whatsapp;
+            if (contacts.instagram) document.getElementById('instagramLink').href = contacts.instagram;
+            if (contacts.twitter) document.getElementById('twitterLink').href = contacts.twitter;
+            if (contacts.phone) document.getElementById('phoneLink').href = `tel:${contacts.phone}`;
         });
     </script>
 </body>
