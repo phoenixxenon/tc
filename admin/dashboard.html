@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard | TC VPN</title>
+    <link rel="stylesheet" href="../styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="bg-animation">
+        <div class="wave"></div>
+        <div class="wave"></div>
+        <div class="wave"></div>
+    </div>
+
+    <div class="admin-panel">
+        <h1>Admin Dashboard</h1>
+        <p>Manage all website content from this panel</p>
+        
+        <!-- Banner Images Section -->
+        <div class="admin-section">
+            <h2>Banner Images</h2>
+            <p>Upload exactly 3 images for the banner section</p>
+            
+            <div class="form-group">
+                <label>Upload Banner Image</label>
+                <input type="file" id="bannerUpload" accept="image/*">
+            </div>
+            
+            <div class="form-group">
+                <label>Banner Title (Optional)</label>
+                <input type="text" id="bannerTitle" placeholder="Enter banner title">
+            </div>
+            
+            <button class="save-btn" onclick="uploadBanner()">Upload Banner</button>
+            
+            <div class="preview-area" id="bannersPreview"></div>
+        </div>
+
+        <!-- Bundles Management -->
+        <div class="admin-section">
+            <h2>VPN Bundles</h2>
+            <p>Edit the VPN packages shown on the bundles page</p>
+            
+            <div id="bundlesEditor"></div>
+            
+            <div class="form-group">
+                <button class="save-btn" onclick="addBundle()">Add New Bundle</button>
+                <button class="save-btn" onclick="saveBundles()">Save All Bundles</button>
+            </div>
+        </div>
+
+        <!-- Contact Information -->
+        <div class="admin-section">
+            <h2>Contact Information</h2>
+            <p>Update the contact links in the footer</p>
+            
+            <div class="form-group">
+                <label><i class="fab fa-telegram"></i> Telegram Link</label>
+                <input type="url" id="telegramLink" placeholder="https://t.me/yourgroup">
+            </div>
+            
+            <div class="form-group">
+                <label><i class="fas fa-envelope"></i> Email Address</label>
+                <input type="email" id="emailLink" placeholder="support@tcvpn.com">
+            </div>
+            
+            <div class="form-group">
+                <label><i class="fas fa-phone"></i> Phone Number</label>
+                <input type="tel" id="phoneLink" placeholder="+1234567890">
+            </div>
+            
+            <button class="save-btn" onclick="saveContacts()">Save Contacts</button>
+        </div>
+    </div>
+
+    <script src="admin.js"></script>
+</body>
+</html>

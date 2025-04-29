@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Get Started | TC VPN</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="bg-animation">
+        <div class="wave"></div>
+        <div class="wave"></div>
+        <div class="wave"></div>
+    </div>
+
+    <header>
+        <h1>TC VPN <span>Technologies</span></h1>
+        <button id="loginBtn" class="admin-login"><i class="fas fa-lock"></i> Admin</button>
+    </header>
+
+    <main>
+        <!-- Banner Images Section -->
+        <section class="banner-section">
+            <div class="banner-grid" id="bannerContainer"></div>
+        </section>
+
+        <!-- Features Section -->
+        <section class="features-section">
+            <h2>Why Choose TC VPN?</h2>
+            <div class="features-grid" id="featuresContainer"></div>
+        </section>
+
+        <!-- Promo Banner -->
+        <section class="promo-banner" onclick="window.open('bundles.html', '_blank')">
+            <div class="promo-content">
+                <h2 class="bouncing-text">ACCESS BINGWA SOKONI</h2>
+                <p>Click to view our exclusive bundles</p>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <div class="contact-icons" id="contactIcons"></div>
+            <p>&copy; 2024 TC VPN Technologies</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+    <script>
+        // Load content when page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            // Load banner images
+            const banners = JSON.parse(localStorage.getItem('banners')) || [];
+            const container = document.getElementById('bannerContainer');
+            
+            if (banners.length === 0) {
+                // Default placeholder images
+                container.innerHTML = `
+                    <div class="banner-item left">
+                        <img src="https://via.placeholder.com/800x400?text=Banner+1" alt="Banner 1">
+                    </div>
+                    <div class="banner-item center">
+                        <img src="https://via.placeholder.com/800x400?text=Banner+2" alt="Banner 2">
+                    </div>
+                    <div class="banner-item right">
+                        <img src="https://via.placeholder.com/800x400?text=Banner+3" alt="Banner 3">
+                    </div>
+                `;
+            } else {
+                container.innerHTML = banners.map((banner, index) => `
+                    <div class="banner-item ${index === 1 ? 'center' : index === 0 ? 'left' : 'right'}">
+                        <img src="${banner.image}" alt="Banner ${index + 1}">
+                        ${banner.title ? `<div class="banner-title">${banner.title}</div>` : ''}
+                    </div>
+                `).join('');
+            }
+
+            // Load features
+            const features = JSON.parse(localStorage.getItem('features')) || [
+                { icon: 'fa-shield-alt', title: 'Security', text: 'AES-256 encryption' },
+                { icon: 'fa-bolt', title: 'Speed', text: '1Gbps servers' },
+                { icon: 'fa-globe', title: 'Global', text: '100+ countries' }
+            ];
+            
+            document.getElementById('featuresContainer').innerHTML = features.map(feat => `
+                <div class="feature-card">
+                    <i class="fas ${feat.icon}"></i>
+                    <h3>${feat.title}</h3>
+                    <p>${feat.text}</p>
+                </div>
+            `).join('');
+
+            // Load contact links
+            const contacts = JSON.parse(localStorage.getItem('contacts')) || {};
+            const contactIcons = document.getElementById('contactIcons');
+            
+            if (contacts.telegram) {
+                contactIcons.innerHTML += `<a href="${contacts.telegram}" target="_blank"><i class="fab fa-telegram"></i></a>`;
+            }
+            if (contacts.email) {
+                contactIcons.innerHTML += `<a href="mailto:${contacts.email}"><i class="fas fa-envelope"></i></a>`;
+            }
+            if (contacts.phone) {
+                contactIcons.innerHTML += `<a href="tel:${contacts.phone}"><i class="fas fa-phone"></i></a>`;
+            }
+        });
+    </script>
+</body>
+</html>
