@@ -24,18 +24,16 @@ window.addEventListener("click", (e) => {
 // Load contact links
 document.addEventListener('DOMContentLoaded', function() {
     const contacts = JSON.parse(localStorage.getItem('contacts')) || {};
-    const contactIcons = document.getElementById('contactIcons');
     
-    if (contactIcons) {
-        contactIcons.innerHTML = '';
-        if (contacts.telegram) {
-            contactIcons.innerHTML += `<a href="${contacts.telegram}" target="_blank"><i class="fab fa-telegram"></i></a>`;
-        }
-        if (contacts.email) {
-            contactIcons.innerHTML += `<a href="mailto:${contacts.email}"><i class="fas fa-envelope"></i></a>`;
-        }
-        if (contacts.phone) {
-            contactIcons.innerHTML += `<a href="tel:${contacts.phone}"><i class="fas fa-phone"></i></a>`;
-        }
-    }
+    // Set all contact links
+    const setLink = (id, value) => {
+        const element = document.getElementById(id);
+        if (element && value) element.href = value;
+    };
+    
+    setLink('telegramLink', contacts.telegram);
+    setLink('whatsappLink', contacts.whatsapp);
+    setLink('instagramLink', contacts.instagram);
+    setLink('twitterLink', contacts.twitter);
+    setLink('phoneLink', contacts.phone ? `tel:${contacts.phone}` : '');
 });
