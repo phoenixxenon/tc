@@ -131,42 +131,51 @@ header h1 span {
 /* Banner Section */
 .banner-section {
     padding: 20px 5%;
+    text-align: center;
+}
+
+.banner-section h2 {
+    font-size: 2rem;
+    margin-bottom: 20px;
+    color: #4facfe;
 }
 
 .banner-grid {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 15px;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 30px;
     margin: 0 auto;
     max-width: 1200px;
 }
 
 .banner-item {
-    height: 250px;
+    background: rgba(255, 255, 255, 0.1);
     border-radius: 10px;
     overflow: hidden;
-    position: relative;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
     transition: all 0.3s;
-}
-
-.banner-item.center {
-    transform: scale(1.05);
-    z-index: 2;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
 }
 
 .banner-item:hover {
-    transform: scale(1.03);
-}
-
-.banner-item.center:hover {
-    transform: scale(1.08);
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
 }
 
 .banner-item img {
     width: 100%;
-    height: 100%;
+    height: auto;
+    aspect-ratio: 3/5;
     object-fit: cover;
+    display: block;
+}
+
+.image-caption {
+    padding: 15px;
+    font-size: 1.2rem;
+    color: #4facfe;
+    font-style: italic;
+    margin: 0;
+    background: rgba(0, 0, 0, 0.3);
 }
 
 /* Features Section */
@@ -212,7 +221,7 @@ header h1 span {
     margin: 10px 0;
 }
 
-/* Promo Banner (Smaller Size) */
+/* Promo Banner */
 .promo-banner {
     background: linear-gradient(45deg, #4facfe, #00f2fe);
     padding: 30px 20px;
@@ -484,95 +493,29 @@ footer {
     cursor: pointer;
 }
 
-/* Responsive Design */
-@media (max-width: 768px) {
-    .banner-grid {
-        grid-template-columns: 1fr;
-    }
-    
-    .banner-item {
-        height: 200px;
-    }
-    
-    .banner-item.center {
-        transform: scale(1);
-    }
-    
-    .preview-area {
-        grid-template-columns: 1fr;
-    }
-    
-    .bundles-grid {
-        grid-template-columns: 1fr;
-    }
-    
-    .promo-banner h2 {
-        font-size: 1.5rem;
-    }
+.vertical-preview {
+    height: 180px;
 }
-/* [Previous CSS remains the same until .banner-section] */
-
-/* Banner Section */
-.banner-section {
-    padding: 20px 5%;
-    text-align: center;
-}
-
-.banner-section h2 {
-    font-size: 2rem;
-    margin-bottom: 20px;
-    color: #4facfe;
-}
-
-.banner-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 30px;
-    margin: 0 auto;
-    max-width: 1200px;
-}
-
-.banner-item {
-    background: rgba(255, 255, 255, 0.1);
-    border-radius: 10px;
-    overflow: hidden;
-    transition: all 0.3s;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-}
-
-.banner-item:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
-}
-
-.banner-item img {
-    width: 100%;
-    height: auto;
-    aspect-ratio: 3/5; /* Vertical rectangle shape */
-    object-fit: cover;
-    display: block;
-}
-
-.image-caption {
-    padding: 15px;
-    font-size: 1.2rem;
-    color: #4facfe;
-    font-style: italic;
-    margin: 0;
-    background: rgba(0, 0, 0, 0.3);
-}
-
-/* [Rest of your existing CSS remains the same] */
 
 /* Responsive Design */
 @media (max-width: 768px) {
     .banner-grid {
-        grid-template-columns: 1fr;
-        max-width: 400px;
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        gap: 30px;
+        flex-wrap: wrap;
     }
     
     .banner-item img {
-        aspect-ratio: 9/16; /* Slightly taller on mobile */
+        display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: rgba(255, 255, 255, 0.05);
+    padding: 15px;
+    border-radius: 20px;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
     }
     
     .image-caption {
@@ -581,6 +524,14 @@ footer {
     }
     
     .promo-banner h2 {
+        font-size: 1.5rem;
+    }
+    
+    .social-icons {
+        gap: 15px;
+    }
+    
+    .social-icons a {
         font-size: 1.5rem;
     }
 }
@@ -634,4 +585,5 @@ footer {
     font-style: italic;
     font-size: 1rem;
 }
+
 
