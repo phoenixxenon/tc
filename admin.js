@@ -16,8 +16,7 @@ function loadBanners() {
     banners.forEach((banner, index) => {
         container.innerHTML += `
             <div class="preview-box">
-                <img src="${banner.image}" alt="Banner ${index + 1}">
-                ${banner.title ? `<p>${banner.title}</p>` : ''}
+                <img src="${banner}" alt="Banner ${index + 1}">
                 <button class="remove-btn" onclick="removeBanner(${index})">×</button>
             </div>
         `;
@@ -34,8 +33,8 @@ function loadBanners() {
 }
 
 function uploadBanner() {
-    const file = document.getElementById('bannerUpload').files[0];
-    const title = document.getElementById('bannerTitle').value;
+    const fileInput = document.getElementById('bannerUpload');
+    const file = fileInput.files[0];
     
     if (!file) {
         alert('Please select an image file');
@@ -49,12 +48,8 @@ function uploadBanner() {
     
     const reader = new FileReader();
     reader.onload = function(e) {
-        banners.push({
-            image: e.target.result,
-            title: title
-        });
-        document.getElementById('bannerUpload').value = '';
-        document.getElementById('bannerTitle').value = '';
+        banners.push(e.target.result);
+        fileInput.value = ''; // Clear the file input
         loadBanners();
     };
     reader.readAsDataURL(file);
@@ -63,6 +58,16 @@ function uploadBanner() {
 function removeBanner(index) {
     banners.splice(index, 1);
     loadBanners();
+}
+
+function saveBanners() {
+    if (banners.length !== 3) {
+        alert('You need exactly 3 banner images');
+        return;
+    }
+    
+    localStorage.setItem('banners', JSON.stringify(banners));
+    alert('Banners saved successfully!');
 }
 
 // Bundles Management
@@ -126,14 +131,18 @@ function saveBundles() {
 function loadContacts() {
     const contacts = JSON.parse(localStorage.getItem('contacts')) || {};
     document.getElementById('telegramLink').value = contacts.telegram || '';
-    document.getElementById('emailLink').value = contacts.email || '';
+    document.getElementById('whatsappLink').value = contacts.whatsapp || '';
+    document.getElementById('instagramLink').value = contacts.instagram || '';
+    document.getElementById('twitterLink').value = contacts.twitter || '';
     document.getElementById('phoneLink').value = contacts.phone || '';
 }
 
 function saveContacts() {
     const contacts = {
         telegram: document.getElementById('telegramLink').value,
-        email: document.getElementById('emailLink').value,
+        whatsapp: document.getElementById('whatsappLink').value,
+        instagram: document.getElementById('instagramLink').value,
+        twitter: document.getElementById('twitterLink').value,
         phone: document.getElementById('phoneLink').value
     };
     
