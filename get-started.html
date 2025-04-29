@@ -20,19 +20,45 @@
     </header>
 
     <main>
-        <!-- Banner Images Section -->
         <section class="banner-section">
             <h2>Our VPN Apps</h2>
-            <div class="banner-grid" id="bannerContainer"></div>
+            <div class="banner-grid">
+                <div class="banner-item">
+                    <img src="banner4.jpg" alt="TCtech VPN">
+                    <p class="image-caption"><i>TCtech VPN</i></p>
+                </div>
+                <div class="banner-item">
+                    <img src="banner2.jpg" alt="TC Prime VPN">
+                    <p class="image-caption"><i>TC Prime VPN</i></p>
+                </div>
+                <div class="banner-item">
+                    <img src="banner3.jpg" alt="Panda VPN">
+                    <p class="image-caption"><i>Panda VPN</i></p>
+                </div>
+            </div>
         </section>
 
-        <!-- Features Section -->
         <section class="features-section">
             <h2>Why Choose TC VPN?</h2>
-            <div class="features-grid" id="featuresContainer"></div>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <i class="fas fa-shield-alt"></i>
+                    <h3>Military Encryption</h3>
+                    <p>AES-256 bit encryption for maximum security</p>
+                </div>
+                <div class="feature-card">
+                    <i class="fas fa-bolt"></i>
+                    <h3>Lightning Fast</h3>
+                    <p>1Gbps servers for seamless browsing</p>
+                </div>
+                <div class="feature-card">
+                    <i class="fas fa-globe"></i>
+                    <h3>Global Network</h3>
+                    <p>100+ server locations worldwide</p>
+                </div>
+            </div>
         </section>
 
-        <!-- Promo Banner -->
         <section class="promo-banner" onclick="window.open('bundles.html', '_blank')">
             <div class="promo-content">
                 <h2 class="bouncing-text">ACCESS BINGWA SOKONI</h2>
@@ -40,13 +66,13 @@
             </div>
         </section>
 
-        <!-- Social Icons -->
         <div class="social-icons">
-            <a href="#" id="telegramLink"><i class="fab fa-telegram"></i></a>
-            <a href="#" id="whatsappLink"><i class="fab fa-whatsapp"></i></a>
-            <a href="#" id="instagramLink"><i class="fab fa-instagram"></i></a>
-            <a href="#" id="twitterLink"><i class="fab fa-twitter"></i></a>
-            <a href="#" id="phoneLink"><i class="fas fa-phone"></i></a>
+            <a href="https://t.me/TCTECHVPNOFFICIAL" target="_blank"><i class="fab fa-telegram"></i></a>
+            <a href="https://wa.me/25433592754" target="_blank"><i class="fab fa-whatsapp"></i></a>
+            <a href="https://www.instagram.com/tctechvpn" target="_blank"><i class="fab fa-instagram"></i></a>
+            <a href="https://x.com/tctechvpn" target="_blank"><i class="fab fa-twitter"></i></a>
+            <a href="mailto:tctechofficial2@gmail.com"><i class="fas fa-envelope"></i></a>
+            <a href="tel:+25433592754"><i class="fas fa-phone"></i></a>
         </div>
     </main>
 
@@ -55,47 +81,5 @@
     </footer>
 
     <script src="script.js"></script>
-    <script>
-        // Load content when page loads
-        document.addEventListener('DOMContentLoaded', function() {
-            // Load banner images
-            const banners = JSON.parse(localStorage.getItem('banners')) || [];
-            const container = document.getElementById('bannerContainer');
-            
-            if (banners.length === 0) {
-                // Default placeholder images
-                container.innerHTML = `
-                    <div class="banner-item">
-                        <img src="banner2.jpg" alt="TCtech VPN">
-                        <p class="image-caption"><i>TCtech VPN</i></p>
-                    </div>
-                    <div class="banner-item">
-                        <img src="banner4.jpg" alt="TC Prime VPN">
-                        <p class="image-caption"><i>TC Prime VPN</i></p>
-                    </div>
-                    <div class="banner-item">
-                        <img src="banner3.jpg" alt="Panda VPN">
-                        <p class="image-caption"><i>Panda VPN</i></p>
-                    </div>
-                `;
-            } else {
-                const captions = ["TCtech VPN", "TC Prime VPN", "Panda VPN"];
-                container.innerHTML = banners.map((banner, index) => `
-                    <div class="banner-item">
-                        <img src="${banner}" alt="VPN App ${index + 1}">
-                        <p class="image-caption"><i>${captions[index] || "VPN App"}</i></p>
-                    </div>
-                `).join('');
-            }
-
-            // Load contact links
-            const contacts = JSON.parse(localStorage.getItem('contacts')) || {};
-            if (contacts.telegram) document.getElementById('telegramLink').href = contacts.telegram;
-            if (contacts.whatsapp) document.getElementById('whatsappLink').href = contacts.whatsapp;
-            if (contacts.instagram) document.getElementById('instagramLink').href = contacts.instagram;
-            if (contacts.twitter) document.getElementById('twitterLink').href = contacts.twitter;
-            if (contacts.phone) document.getElementById('phoneLink').href = `tel:${contacts.phone}`;
-        });
-    </script>
 </body>
 </html>
